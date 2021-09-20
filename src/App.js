@@ -3,7 +3,7 @@ import axios from "axios";
 import { Route } from "react-router-dom";
 import { Header } from "./components";
 import { Home, Cart } from "./pages";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { setPizzas } from "./redux/actions/pizzas";
 import { store } from "./redux/store";
@@ -12,16 +12,10 @@ import filters from "./redux/reducers/filters";
 
 function App() {
   const dispatch = useDispatch();
-  const { items } = useSelector(({ pizzas, filters }) => {
-    return {
-      items: pizzas.items,
-      sortBy: filters.sortBy,
-    };
-  });
 
   useEffect(() => {
-    axios.get("http://localhost:3000/db.json").then((response) => {
-      dispatch(setPizzas(response.data.pizzas));
+    axios.get("http://localhost:3001/pizzas").then((response) => {
+      dispatch(setPizzas(response.data));
     });
   }, []);
   return (
@@ -29,7 +23,7 @@ function App() {
       <div className="wrapper">
         <Header />
         <div className="content">
-          <Route path="/" render={() => <Home items={items} />} exact />
+          <Route path="/" component={Home} exact />
           <Route path="/cart" component={Cart} exact />
         </div>
       </div>
