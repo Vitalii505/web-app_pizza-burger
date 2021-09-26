@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import LoadingBlock from "./LoadingBlock";
 
 function PizzaBlock({ name, imageUrl, price, types, sizes }) {
   const availableTypes = ["тонкое", "традиционное"];
@@ -78,10 +79,15 @@ PizzaBlock.propTypes = {
   price: PropTypes.number.isRequired,
   types: PropTypes.arrayOf(PropTypes.number).isRequired,
   sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
+  isLoading: PropTypes.bool,
 };
 
 PizzaBlock.defaultProps = {
+  name: "---",
+  price: 0,
   types: [],
+  sizes: [],
+  isLoading: false,
 };
 
 export default PizzaBlock;
